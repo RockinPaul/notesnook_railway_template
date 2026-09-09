@@ -5,7 +5,7 @@ FROM minio/mc:RELEASE.2024-07-26T13-08-44Z AS mc
 
 FROM minio/minio:RELEASE.2024-07-29T22-14-52Z
 COPY --from=mc /usr/bin/mc /usr/bin/mc
-COPY --chmod=755 minio/entrypoint.sh /usr/local/bin/minio-entrypoint.sh
+COPY --chmod=755 entrypoint.sh /usr/local/bin/minio-entrypoint.sh
 
 # Fixed Railway-side settings: listen on the port Railway routes to, and the bucket name.
 ENV MINIO_PORT=8080 \
