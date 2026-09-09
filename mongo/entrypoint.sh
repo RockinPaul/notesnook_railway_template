@@ -6,9 +6,11 @@ set -euo pipefail
 
 : "${MONGO_REPLICA_SET_NAME:=rs0}"
 : "${MONGO_PORT:=27017}"
-# The member host clients will reach. On Railway RAILWAY_PRIVATE_DOMAIN is the service's
-# internal name; override with MONGO_ADVERTISED_HOST if needed.
-ADVERTISED_HOST="${MONGO_ADVERTISED_HOST:-${RAILWAY_PRIVATE_DOMAIN:-localhost}}"
+# Advertise localhost: a single-node set on a private-networking PaaS cannot reliably
+# recognise its own external/overlay hostname as a member (mongod would sit as a
+# ReplicaSetGhost). Clients bypass discovery with directConnection=true and still get
+# transactions, so the advertised member only has to be one mongod recognises as itself.
+ADVERTISED_HOST="${MONGO_ADVERTISED_HOST:-localhost}"
 
 DATA_DIR="${MONGO_DATA_DIR:-/data/db}"
 mkdir -p "$DATA_DIR"
