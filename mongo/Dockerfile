@@ -3,5 +3,5 @@
 # healthchecks are HTTP-only, so this image initiates the set itself at startup instead.
 FROM mongo:7.0.12
 
-COPY --chmod=755 entrypoint.sh /usr/local/bin/rs-entrypoint.sh
+COPY --chmod=755 mongo/entrypoint.sh /usr/local/bin/rs-entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/rs-entrypoint.sh"]
