@@ -1,5 +1,7 @@
 # Notesnook Sync Server on Railway
 
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/notesnook-sync-server?referralCode=YqmMB-&utm_medium=integration&utm_source=template&utm_campaign=generic)
+
 Self-host the [Notesnook](https://notesnook.com) sync server: a private, end-to-end
 encrypted notes backend that the official Notesnook apps (web, desktop, mobile) connect to
 instead of Notesnook's own servers. Your notes stay end-to-end encrypted either way;
