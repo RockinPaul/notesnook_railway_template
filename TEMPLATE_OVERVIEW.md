@@ -42,7 +42,7 @@ account, and then disable further signups.
 
 Six services build from this template's repository, each from its own directory:
 
-- **identity**, **notesnook-server**, **sse** — `streetwriters/*:v1.0-beta.36`; **monograph**
+- **identity**, **notesnook-server**, **sse** — `streetwriters/*:v1.0-beta.46`; **monograph**
   — `streetwriters/monograph:1.3.1`. Thin wrappers bake the fixed self-hosted settings (mode,
   port, database names, S3 bucket and region), so they are not deployment inputs. Healthchecks
   on `/health` and `/api/health`.
