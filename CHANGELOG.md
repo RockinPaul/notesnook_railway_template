@@ -3,12 +3,12 @@
 ## 2026-11-02 — sync server v1.0-beta.46
 
 - `identity`, `notesnook-server` and `sse` run `streetwriters/*:v1.0-beta.46` (were v1.0-beta.36).
-- **Security fixes:** WAMP, the services' internal RPC (password reset, user deletion, subscription changes, SSE), was reachable without authentication at `/wamp` on every public port. It now listens only on a separate internal port (each service's port + 1, so 8081 here) and requires a token derived from `NOTESNOOK_API_SECRET`. Also: refresh tokens rotate on every use, sign-in with an MFA code requires the password, password reset accepts only tokens from the reset flow, the CORS proxy refuses internal addresses, S3 object names are validated whole, and signing keys are encrypted in the database.
+- **Security fixes:** WAMP, the services' internal RPC (password reset, user deletion, subscription changes, SSE), was reachable without authentication at `/wamp` on every public port. It now listens only on a separate internal port (each service's port + 1, so 8081 here) and requires a token derived from `NOTESNOOK_API_SECRET`. Also: refresh tokens rotate on every use, sign-in with an MFA code requires the password, password reset accepts only tokens from the reset flow, the CORS proxy refuses internal addresses, S3 object names are validated whole. Identity also gains an opt-in OpenIddict token engine (`IDENTITY_ENGINE=openiddict`) whose keys are encrypted with `NOTESNOOK_API_SECRET`; the default stays IdentityServer4.
 - Nothing to wire: the three services already share `NOTESNOOK_API_SECRET` and reach each other by private hostname, and Railway's private network carries the new port. Writes now always run in a transaction, which the template's single-node replica set supports.
 
 ### Upgrading an existing deployment
 
-Nothing to change. **Back up `mongo` first**: the services write in transactions and re-encrypt stored keys on their first start. Redeploy `identity`, `notesnook-server` and `sse` together, since an old service cannot reach a new one's WAMP port.
+Nothing to change. **Back up `mongo` first**: from this release every write runs in a transaction. Redeploy `identity`, `notesnook-server` and `sse` together, since an old service cannot reach a new one's WAMP port.
 
 ## 2026-09-09 — initial release
 
