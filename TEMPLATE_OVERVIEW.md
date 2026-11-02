@@ -48,7 +48,7 @@ Six services build from this template's repository, each from its own directory:
   on `/health` and `/api/health`.
 - **mongo** — `mongo:7.0.12`, wrapped to initiate a single-node replica set advertised on
   `localhost`; clients connect with `directConnection=true`. Volume at `/data`.
-- **minio** — `minio/minio` with `mc`, wrapped to create the `attachments` bucket and keep
+- **minio** — `pgsty/silo` (a MinIO fork) with `mc`, wrapped to create the `attachments` bucket and keep
   data in a subdirectory of the volume. Healthcheck on `/minio/health/live`. Volume at `/data`.
 
 The only settings you may change are `INSTANCE_NAME` (shown on the app's login screen) and

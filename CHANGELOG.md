@@ -4,11 +4,12 @@
 
 - `identity`, `notesnook-server` and `sse` run `streetwriters/*:v1.0-beta.46` (were v1.0-beta.36).
 - **Security fixes:** WAMP, the services' internal RPC (password reset, user deletion, subscription changes, SSE), was reachable without authentication at `/wamp` on every public port. It now listens only on a separate internal port (each service's port + 1, so 8081 here) and requires a token derived from `NOTESNOOK_API_SECRET`. Also: refresh tokens rotate on every use, sign-in with an MFA code requires the password, password reset accepts only tokens from the reset flow, the CORS proxy refuses internal addresses, S3 object names are validated whole. Identity also gains an opt-in OpenIddict token engine (`IDENTITY_ENGINE=openiddict`) whose keys are encrypted with `NOTESNOOK_API_SECRET`; the default stays IdentityServer4.
+- **`minio` now runs `pgsty/silo:RELEASE.2026-09-16T00-00-00Z` with `pgsty/mc`.** MinIO's own images were removed from Docker Hub, so every new deploy failed to build this service ("pull access denied" for `minio/mc`). Silo is the MinIO fork upstream's compose file switched to; it keeps the same S3 API, health endpoints, `MINIO_ROOT_*` variables and on-disk layout (`.minio.sys`). The service keeps its name, so the other services' references are unchanged.
 - Nothing to wire: the three services already share `NOTESNOOK_API_SECRET` and reach each other by private hostname, and Railway's private network carries the new port. Writes now always run in a transaction, which the template's single-node replica set supports.
 
 ### Upgrading an existing deployment
 
-Nothing to change. **Back up `mongo` first**: from this release every write runs in a transaction. Redeploy `identity`, `notesnook-server` and `sse` together, since an old service cannot reach a new one's WAMP port.
+Nothing to change. **Back up `mongo` first**: from this release every write runs in a transaction. Redeploy `identity`, `notesnook-server` and `sse` together, since an old service cannot reach a new one's WAMP port. Back up the `minio` volume too before its first start on Silo.
 
 ## 2026-09-09 — initial release
 

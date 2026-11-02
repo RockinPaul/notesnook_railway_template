@@ -15,7 +15,7 @@ each public service its own HTTPS domain.
 | Service | Image | Public | Purpose |
 |---|---|---|---|
 | `mongo` | `mongo:7.0.12` (thin wrapper) | no | Database, run as a single-node replica set |
-| `minio` | `minio/minio` (thin wrapper) | yes | S3 storage for attachments |
+| `minio` | `pgsty/silo`, a MinIO fork (thin wrapper) | yes | S3 storage for attachments |
 | `identity` | `streetwriters/identity` | yes | Authentication / OpenID Connect |
 | `notesnook-server` | `streetwriters/notesnook-sync` | yes | The sync API |
 | `sse` | `streetwriters/sse` | yes | Realtime change events |

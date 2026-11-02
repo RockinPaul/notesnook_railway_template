@@ -1,5 +1,5 @@
 #!/bin/sh
-# Start MinIO, then create the attachments bucket once it is reachable. The data lives in a
+# Start Silo (the MinIO fork), then create the attachments bucket once it is reachable. The data lives in a
 # SUBDIRECTORY of the volume (/data/s3), not the volume root, so Railway's root-owned
 # `lost+found` is not mistaken for a bucket.
 set -eu
@@ -25,4 +25,4 @@ create_bucket() {
 
 create_bucket &
 
-exec minio server "$MINIO_DATA_DIR" --address ":$MINIO_PORT" --console-address ":$MINIO_CONSOLE_PORT"
+exec silo server "$MINIO_DATA_DIR" --address ":$MINIO_PORT" --console-address ":$MINIO_CONSOLE_PORT"
